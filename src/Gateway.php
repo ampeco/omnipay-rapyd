@@ -9,6 +9,7 @@ use Ampeco\OmnipayRapyd\Message\PurchaseRequest;
 use Ampeco\OmnipayRapyd\Message\CreateCardRequest;
 use Ampeco\OmnipayRapyd\Message\DeleteCardRequest;
 use Ampeco\OmnipayRapyd\Message\GetTransactionRequest;
+use Ampeco\OmnipayRapyd\Message\ListPaymentMethodsRequest;
 use Ampeco\OmnipayRapyd\Message\VoidRequest;
 use Omnipay\Common\AbstractGateway;
 
@@ -31,7 +32,7 @@ class Gateway extends AbstractGateway
 
     public function authorize(array $options = []): AbstractRequest
     {
-        return $this->createRequest(PurchaseRequest::class, array_merge($options, ['hold' => true]));
+        return $this->createRequest(PurchaseRequest::class, array_merge($options, ['capture' => false]));
     }
 
     public function capture(array $options = []): AbstractRequest
@@ -46,7 +47,7 @@ class Gateway extends AbstractGateway
 
     public function purchase(array $options = []): AbstractRequest
     {
-        return $this->createRequest(PurchaseRequest::class, array_merge($options, ['hold' => false]));
+        return $this->createRequest(PurchaseRequest::class, array_merge($options, ['capture' => true]));
     }
 
     public function createCard(array $options = []): AbstractRequest
@@ -64,13 +65,8 @@ class Gateway extends AbstractGateway
          return $this->createRequest(CreateCustomerRequest::class, $options);
      }
 
-    // public function getTransaction(array $options = []): AbstractRequest
-    // {
-    //     return $this->createRequest(GetTransactionRequest::class, $options);
-    // }
-
-    // public function checkCreateCard(array $options = []): AbstractRequest
-    // {
-    //     return $this->createRequest(CheckCreateCardRequest::class, $options);
-    // }
+     public function listPaymentMethods(array $options = []): AbstractRequest
+     {
+         return $this->createRequest(ListPaymentMethodsRequest::class, $options);
+     }
 }

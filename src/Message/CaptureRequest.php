@@ -6,9 +6,9 @@ class CaptureRequest extends AbstractRequest
 {
     public function getEndpoint()
     {
-        $this->validate('transactionId');
+        $this->validate('transactionReference');
 
-        return "pga/transactions/{$this->getTransactionId()}/complete_hold";
+        return "payments/{$this->getTransactionReference()}/capture";
     }
 
     public function getData()
@@ -16,7 +16,7 @@ class CaptureRequest extends AbstractRequest
         $this->validate('amount');
 
         return [
-            "amount" => $this->getAmount() * 100,
+            "amount" => $this->getAmount(),
         ];
     }
 }

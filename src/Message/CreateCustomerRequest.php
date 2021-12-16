@@ -41,7 +41,7 @@ class CreateCustomerRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate('email', 'userId', 'name');
+        $this->validate('userId', 'name');
 
         return [
             'email' => $this->getEmail(),

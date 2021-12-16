@@ -19,7 +19,6 @@ class CreateCardRequest extends AbstractRequest
             'country' => $this->getCountry(),
             'currency' => $this->getCurrency(),
             'customer' => $this->getCustomerId(),
-            // 'payment_method_type' => 'is_visa_card',
         ];
     }
 }

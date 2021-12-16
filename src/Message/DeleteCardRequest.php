@@ -6,22 +6,18 @@ class DeleteCardRequest extends AbstractRequest
 {
     public function getEndpoint()
     {
-        $this->validate('transactionReference');
+        $this->validate('customerId', 'token');
 
-        return "frames/links/pga/{$this->getTransactionReference()}/refund";
+        return "customers/{$this->getCustomerId()}/payment_methods/{$this->getToken()}";
     }
 
     public function getHttpMethod()
     {
-        return 'PUT';
+        return 'DELETE';
     }
 
     public function getData()
     {
-        $this->validate('token');
-
-        return [
-            "transaction_id" => $this->getToken(),
-        ];
+        return [];
     }
 }

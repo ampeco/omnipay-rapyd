@@ -2,13 +2,13 @@
 
 namespace Ampeco\OmnipayRapyd\Message;
 
-class GetTransactionRequest extends AbstractRequest
+class ListPaymentMethodsRequest extends AbstractRequest
 {
     public function getEndpoint()
     {
-        $this->validate('transactionId');
+        $this->validate('customerId');
 
-        return "pga/transactions/{$this->getTransactionId()}";
+        return "/customers/{$this->getCustomerId()}/payment_methods";
     }
 
     public function getHttpMethod()
@@ -23,6 +23,6 @@ class GetTransactionRequest extends AbstractRequest
 
     protected function getResponseClass()
     {
-        return TransactionResponse::class;
+        return ListPaymentMethodsResponse::class;
     }
 }

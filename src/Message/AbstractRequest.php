@@ -40,7 +40,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         $httpResponse = $this->httpClient->request(
             $this->getHttpMethod(),
-            rtrim($this->getBaseUrl(), '/') . "/" . ltrim($this->getEndpoint(), '/'),
+            rtrim($this->getBaseUrl(), '/') . '/' . ltrim($this->getEndpoint(), '/'),
             $headers,
             json_encode($data),
         );
@@ -60,20 +60,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
              $timestamp = intval(microtime(true)),
              $this->getAccessKey(),
              $this->getSecretKey(),
-             json_encode($this->getData(), JSON_UNESCAPED_SLASHES)
         ];
 
-        $signature = implode('', $elements);
-        $hashed = base64_encode(hash_hmac("sha256", $signature, $this->getSecretKey()));
+        if (strtolower($this->getHttpMethod()) !== 'get' || !empty($this->getData())) {
+            $elements[] = json_encode($this->getData(), JSON_UNESCAPED_SLASHES);
+        }
 
-        info('headers', [
-            'elements' => $elements,
-            'singature' => $signature,
-            'hased' => $hashed,
-        ]);
+        $signature = base64_encode(hash_hmac('sha256', implode($elements), $this->getSecretKey()));
 
         return [
-            'signature' => $hashed,
+            'signature' => $signature,
             'salt' => $salt,
             'timestamp' => $timestamp,
         ];

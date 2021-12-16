@@ -32,7 +32,7 @@ class Response extends AbstractResponse implements ResponseInterface, RedirectRe
 
     public function isRedirect()
     {
-        return !is_null($this->getRedirectUrl());
+        return !! $this->getRedirectUrl();
     }
 
     public function getRedirectUrl()

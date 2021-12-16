@@ -4,43 +4,32 @@ namespace Ampeco\OmnipayRapyd\Message;
 
 class PurchaseRequest extends AbstractRequest
 {
-    public function setHold($value)
+    public function setCapture($value)
     {
-        $this->setParameter('hold', (bool) $value);
+        $this->setParameter('capture', (bool) $value);
     }
 
-    public function getHold()
+    public function getCapture()
     {
-        return $this->getParameter('hold');
+        return $this->getParameter('capture');
     }
 
     public function getEndpoint()
     {
-        return 'pga/transactions';
+        return 'payments';
     }
 
     public function getData()
     {
-        $this->validate('transactionId', 'amount', 'token', 'description', 'hold');
+        $this->validate('amount', 'currency', 'token', 'description', 'capture');
 
         return [
-            "amount" => $this->getAmountInteger(),
-            "external_id" => $this->getTransactionId(),
-            "payer" => [
-                "source" => "RECURRENT_TRANSACTION",
-                "transaction_id" => $this->getToken(),
-            ],
-            "description" => $this->getDescription(),
-            "short_description" => $this->getDescription(),
-            "client_ip" => "127.0.0.1",
-            "merchant_config_id" => $this->getMerchantConfigId(),
-            "config_id" => $this->getConfigId(),
-            "hold" => $this->getHold(),
+            'initiation_type' => 'installment',
+            'amount' => $this->getAmount(),
+            'currency' => $this->getCurrency(),
+            'payment_method' => $this->getToken(),
+            'description' => $this->getDescription(),
+            'capture' => $this->getCapture(),
         ];
-    }
-
-    protected function getResponseClass()
-    {
-        return PurchaseResponse::class;
     }
 }
