@@ -63,7 +63,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         ];
 
         if (strtolower($this->getHttpMethod()) !== 'get' || !empty($this->getData())) {
-            $elements[] = json_encode($this->getData(), JSON_UNESCAPED_SLASHES);
+            $elements[] = json_encode($this->getData(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
 
         $signature = base64_encode(hash_hmac('sha256', implode($elements), $this->getSecretKey()));
