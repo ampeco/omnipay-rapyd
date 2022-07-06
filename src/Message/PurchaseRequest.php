@@ -24,7 +24,7 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('amount', 'currency', 'token', 'description', 'capture');
 
         return [
-            'initiation_type' => 'installment',
+            'initiation_type' => 'unscheduled',
             'amount' => $this->getAmount(),
             'currency' => $this->getCurrency(),
             'payment_method' => $this->getToken(),
