@@ -57,6 +57,6 @@ class Response extends AbstractResponse implements ResponseInterface, RedirectRe
 
     public function getMessage()
     {
-        return @$this->data['status']['message'];
+        return @$this->data['status']['message'] ?? '';
     }
 }
