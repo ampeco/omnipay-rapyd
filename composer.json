@@ -1,5 +1,6 @@
 {
     "name": "ampeco/omnipay-rapyd",
+    "version": "0.0.4",
     "description": "Omnipay plugin for https://docs.rapyd.net/build-with-rapyd",
     "type": "library",
     "license": "MIT",
