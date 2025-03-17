@@ -21,7 +21,7 @@ class ListPaymentMethodsResponse extends Response
 
         $cards = array_filter(
             $this->data['data'] ?? [],
-            fn ($card) => $card['category'] === self::TYPE_CARD
+            fn ($card) => $card['category'] === self::TYPE_CARD && !empty($card['id'])
         );
 
         return $this->cards = array_map(fn ($card) => new Card($card), $cards);
